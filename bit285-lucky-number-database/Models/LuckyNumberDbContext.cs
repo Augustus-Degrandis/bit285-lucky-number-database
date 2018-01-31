@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using bit285_lucky_number_database.Models;
+using lucky_number_database.Models;
 
 namespace bit285_lucky_number_database.Models
 {
@@ -10,6 +12,6 @@ namespace bit285_lucky_number_database.Models
     {
         public LuckyNumberDbContext() : base("LuckyNumber") { }
 
-
+        public DbSet<LuckyNumber> LuckyNumbers { get; set; }
     }
 }
