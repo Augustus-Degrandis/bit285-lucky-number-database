@@ -16,7 +16,7 @@ namespace bit285_lucky_number_database
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "LuckyNumber", action = "Spin", id = UrlParameter.Optional }
+                defaults: new { controller = "LuckyNumber", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

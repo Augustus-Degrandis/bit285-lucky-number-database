@@ -12,32 +12,36 @@ namespace bit285_lucky_number_database.Controllers
     {
         private LuckyNumberDbContext dbc = new LuckyNumberDbContext();
 
-       
+        [HttpGet]
+        public ActionResult Spin()
+        {
+            int id = (int)Session["currentID"];
+            LuckyNumber Luck = dbc.LuckyNumbers.Where(m => m.LuckyNumberID == id).First();
+            dbc.SaveChanges();
+            return View(Luck);
+        }
 
         [HttpPost]
-        public ActionResult Spin(LuckyNumber lucky)
+        public ActionResult Spin(LuckyNumber databaseLuck)
         {
-            LuckyNumber databaseLuck = dbc.LuckyNumbers.Where(m=>m.LuckyNumberID == (int)Session["currentID"]).First();
+           
+            //LuckyNumber databaseLuck = dbc.LuckyNumbers.Where(m => m.LuckyNumberID == (int)Session["currentID"]).First();
             //change the balence in the database
-            if(databaseLuck.Balance>0)
+            if (databaseLuck.Balance>0)
             {
                 databaseLuck.Balance -= 1;
             }
+            
             //update the number in the database using the form submission value
-            databaseLuck.Number = lucky.Number;
+            //databaseLuck.Number = lucky.Number;
             //Save to the DataBase
+            //dbc.LuckyNumbers.
             dbc.SaveChanges();
 
             return View(databaseLuck);
         }
         // GET: LuckyNumber
-        public ActionResult Spin()
-        {
-
-            //LuckyNumber myLuck = new LuckyNumber { Number = 7, Balance = 4 };
-
-            return View( );
-        }
+        
         [HttpGet]
         public ActionResult Index()
         {
@@ -50,7 +54,7 @@ namespace bit285_lucky_number_database.Controllers
             dbc.LuckyNumbers.Add(lucky);
             dbc.SaveChanges();
             Session["currentID"] = lucky.LuckyNumberID;
-            return View("Spin");
+            return RedirectToAction("Spin");
         }
 
         
